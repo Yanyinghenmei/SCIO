@@ -1,0 +1,150 @@
+
+数据说明:
+当targetName + actionName [+ pageName]相同时, 判为同一行为, 上传数据
+
+elementPath 同样的系统版本确定唯一元素
+targetName  方法实现者
+actionName  所调用的方法
+className   元素类名(假如圈选的是UITableViewCell/UICollectionViewCell 则以listView为统计元素主体, className为listView的类名)
+date        触发时间
+tag         view.tag
+analysisName 统计行为明称, 默认值为 UILabel-text/UIButton-title/UIView-Class/UIViewController-title
+pageName    所在的页面, 仅仅在后台分析中使用, 可以默认使用className, 移动端不干涉.
+selected    如果是UIControl 选中状态
+indexPath   如果是listView
+
+
+pagePara 预留字段 - 只存在后台统计配置中, 不出自移动端
+
+可视化埋点问题:
+很难定位同一个UI元素, 受系统本和UI修改影响
+相对容易确定同一个target+aciton组合, 但受方法名/类名修改影响, 不确定代码混淆后是否会有影响.
+所以, 如果想要统计数据的准确, 尽量以target+action+tag+selected...来确定一个行为, 而不要区分触发元素
+同时, 每次APP版本更新后, 不仅需要为修改的部分重新埋点, 也要考虑iOS系统版本的影响.
+
+适合针对某一个版本进行行为分析.
+
+
+/////// 字段及其简写
+
+1、access_type  --- ast  pc mac iphone android  机器类型
+2   web_site（域名） ---  webs  域名来源
+3.  access_ip（访问ip） --- asip
+4.  visit_time(访问时间) 服务器自动生成
+5.浏览器内核名字
+6.浏览器内核版本
+7.操作系统名称
+8.操作系统版本
+9.操作系统位数
+10.浏览器名称
+11.浏览器版本号
+//移动
+12、MAC  --- mac         手机串号
+13、SDKVersion SDK  --- sdkv 版本号
+14、appVersion App  --- appv 版本号
+15、AppLanguage --- appl APP使用语言
+16、DeviceId --- devid 设备编号
+
+//pc
+17、OsType --- ost 操作系统
+18、OsVersion --- osv 操作系统版本
+19、Longitude --- lon 经度
+20、Latitude --- lat 纬度
+
+//移动
+21 deviceType --- devt 设备型号, 例如iPhone9,1 == iPhone 7
+22 deviceFacture --- devf 生产厂商
+23、deviceNetType --- dnt  网络类型，1代表2G/3G，2代表Wifi，3代表CellNetwork，4代表其他
+24、deviceNetOperator  --- dno 网络运营商，1代表中国移动，2代表中国联通，3代表中国电信，4代表未知
+
+//用户信息
+26、UserId  --- uid
+27、UserName --- uname
+28.   userPhoneNumber  --- upn 用手手机号
+28.   userSex  --- usex
+28.   userAge  --- uage
+//访问功能信息
+28. access_module  --- asm  访问的功能模块
+29.access_function --- asf 功能点
+
+
+//// 移动端
+className --- cname        // 触发事件的视图实例的类名
+date --- date            // 触发时间
+elementPath --- epath        // 视图实例的视图层级
+tag --- tag            // iOS: 视图的标号, 不唯一 安卓: 视图id, 唯一, 或者安卓再新加个参数
+targetActionMap --- tam        // 视图所有的target-action映射
+targetAction --- ta        // 视图点击的某一个 target-action 映射
+actionName --- aname        // 点击触发的方法/函数名
+analysisName --- alname        // 统计名称, 默认取按钮标题/页面标题  或者类名
+targetName --- tname        // 触发方法所在的文件的类名
+selected --- sele        // 视图是否为选中状态
+indexPath --- idxp        // 列表点击时, 所点击的位置
+customAnalysisName --- cusan    // 圈选时, 自定义
+
+
+
+示例:
+1. 列表点击搜集到的数据
+{
+actionName = "tableView:didSelectRowAtIndexPath:";
+analysisName = "";
+className = UITableView;
+date = 1563430836;
+elementPath = "TableViewController/UIView[0]/UITableView(0,0)";
+indexPath = "(0,3)";
+tag = 0;
+targetName = TableViewController;
+}
+
+2. 圈选得到的数据
+{
+className = UITableView;
+date = 1563432645;
+elementPath = "TableViewController/UIView[0]/UITableView(0,2)";
+tag = 0;
+customAnalysisName = "商品列表点击/长按"
+targetActionMap =     (
+{
+action = "longPress:";
+target = TableViewController;
+}
+{
+action = "tableView:didSelectRowAtIndexPath:";
+target = TableViewController;
+}
+);
+}
+
+--- 将来可能在targetActionMap这一字段, 只选择其中一项为该事件起别名
+
+{
+className = UITableView;
+date = 1563432645;
+elementPath = "TableViewController/UIView[0]/UITableView(0,2)";
+tag = 0;
+customAnalysisName = "商品列表长按"
+targetAction = {
+action = "longPress:";
+target = TableViewController;
+}
+}
+
+
+
+
+/// 后续计划
+1. 视图访问路径
+2. 全埋点探索 与 配置表
+3. mac/设备id/设备系统版本...等信息获取
+3. EventId 生成:
+  为了实现在可视化圈选的时的事件的唯一性，每一个无埋点的事件采集都必须有且仅有一个唯一的标识符来区分不同的事件。不同于代码埋点，用户可以自定义的配置自己所需的EventID，无埋点过程中，需要SDK自己配置每一个采集事件的EventID，通过可视化圈选的操作，筛选出相应的EventID所对应的数据信息。HubbleData采用的是构造view唯一标识字符串的方式去唯一的标识这样的一个事件，主要由view的层级结构path路径、该view的所在页面类名以及view所带的一些自身固定属性等构成，并通过SHA256编码来获取唯一的EventID
+
+
+
+
+
+
+集成注意:
+1. 设置为 Allow Arbitrary Loads / 或者使用白名单, 需要研究
+2. 依赖库 CoreTelephony

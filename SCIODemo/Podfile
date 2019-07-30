@@ -1,0 +1,22 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+workspace 'SCIODemo'
+
+# define common pods of scio and sciodemo
+def shared_pods
+  pod 'AFNetworking'
+end
+
+target 'SCIODemo' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  project 'SCIODemo'
+  shared_pods
+end
+
+target 'SCIO' do
+  project '../SCIO/SCIO'
+  shared_pods
+end

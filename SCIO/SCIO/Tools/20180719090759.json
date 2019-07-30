@@ -1,0 +1,21 @@
+
+(
+    {
+        "id":"123",
+        "elementPath":"ViewController/UIView[0]/UIButton",
+        "analysisname":"按钮点击",
+        "pagename":"首页",
+        "actionname":"btnClick:",
+        "targetname":"ViewController",
+        "pagePara":{
+            (
+                {
+                    "varname":"xxx状态,xxx开关",
+                    "propertyPath":"dataArray",
+                    "containIn":"0"
+                }
+            )
+        }
+    },
+)
+
