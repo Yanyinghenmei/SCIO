@@ -9,9 +9,9 @@
 #ifndef ZYHeader_h
 #define ZYHeader_h
 
-
-#import "StatisticalRequest.h"
 #import "ParameterConfig.h"
 #import "ZYDefine.h"
+#import "DataCacheManager.h"
+#import "ZYGlobalInfoHelper.h"
 
 #endif /* ZYHeader_h */

@@ -67,21 +67,11 @@
         NSString *targetName = NSStringFromClass(tableView.delegate.class);
         NSString *className = NSStringFromClass(tableView.class);
         NSString *indexPathStr = [NSString stringWithFormat:@"(%zd,%zd)",indexPath.section,indexPath.row];
-        NSString *date = [NSString stringWithFormat:@"%.0f",[NSDate date].timeIntervalSince1970];
-        NSString *tag = [NSString stringWithFormat:@"%zd",tableView.tag];
+        NSString *date = [NSString stringWithFormat:@"%f",[NSDate date].timeIntervalSince1970];
         NSString *analysisName = @"";
         
-        NSDictionary *dic = @{p_elementPath:elementPath,
-                              p_actionName:actionName,
-                              p_targetName:targetName,
-                              p_className:className,
-                              p_indexPath:indexPathStr,
-                              p_date:date,
-                              p_tag:tag,
-                              p_analysisName:analysisName};
-        ZYPrintf(@"%@",dic);
-        // 上传数据
-        [StatisticalRequest uploadEventInfos:@[dic]];
+        // 保存数据
+        [[DataCacheManager shareManager] saveEventDataWithSessionId:[ZYGlobalInfoHelper sessionId] targetName:targetName actionName:actionName className:className elementPath:elementPath analysisName:analysisName date:date indexPath:indexPathStr selected:false tag:tableView.tag];
     }
     
     // 最后调用原方法

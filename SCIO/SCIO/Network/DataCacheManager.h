@@ -17,9 +17,33 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface DataCacheManager : NSObject
 
-+ (void)saveDeviceData:(NSDictionary *)data;
-+ (void)saveEventData:(NSDictionary *)data;
-+ (void)savePageVisitData:(NSDictionary *)data;
++ (instancetype)shareManager;
+
+- (void)saveEventDataWithSessionId:(NSString *)sessionId
+                        targetName:(NSString *)targetName
+                        actionName:(NSString *)actionName
+                         className:(NSString *)className
+                       elementPath:(NSString *)elementPath
+                      analysisName:(NSString *)analysisName
+                              date:(NSString *)date
+                         indexPath:(nullable NSString *)indexPath
+                          selected:(BOOL)selected
+                               tag:(NSInteger)tag;
+
+- (void)savePageVisitDataWithSessionId:(NSString *)sessionId
+                            targetName:(NSString *)targetName
+                            actionName:(NSString *)actionName
+                             className:(NSString *)className
+                           elementPath:(NSString *)elementPath
+                          analysisName:(NSString *)analysisName
+                                  date:(NSString *)date
+                                   tag:(NSInteger)tag;
+
+- (NSArray *)eventDataArrayWithSessionId:(NSString *)sessionId;
+- (NSArray *)pageVisitDataArrayWithSessionId:(NSString *)sessionId;
+
+- (void)cleanEventData;
+- (void)cleanPageVisitData;
 
 @end
 

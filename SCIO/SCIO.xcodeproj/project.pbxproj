@@ -33,7 +33,6 @@
 		FE01CFB222F010E20047C1F6 /* ZYGlobalInfoHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF8022F010E10047C1F6 /* ZYGlobalInfoHelper.h */; };
 		FE01CFB322F010E20047C1F6 /* UIGestureRecognizer+ZYAnalysis.m in Sources */ = {isa = PBXBuildFile; fileRef = FE01CF8122F010E10047C1F6 /* UIGestureRecognizer+ZYAnalysis.m */; };
 		FE01CFB422F010E20047C1F6 /* UICollectionView+ZYAnalysis.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF8222F010E10047C1F6 /* UICollectionView+ZYAnalysis.h */; };
-		FE01CFB522F010E20047C1F6 /* ZYPageIOQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF8322F010E10047C1F6 /* ZYPageIOQueue.h */; };
 		FE01CFB622F010E20047C1F6 /* UIApplication+ZYAnalysis.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF8422F010E10047C1F6 /* UIApplication+ZYAnalysis.h */; };
 		FE01CFB722F010E20047C1F6 /* UIViewController+ZYAnalysis.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF8522F010E20047C1F6 /* UIViewController+ZYAnalysis.h */; };
 		FE01CFB822F010E20047C1F6 /* UICollectionView+ZYAnalysis.m in Sources */ = {isa = PBXBuildFile; fileRef = FE01CF8622F010E20047C1F6 /* UICollectionView+ZYAnalysis.m */; };
@@ -43,7 +42,6 @@
 		FE01CFBC22F010E20047C1F6 /* ZYViewDataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF8A22F010E20047C1F6 /* ZYViewDataHelper.h */; };
 		FE01CFBD22F010E20047C1F6 /* UIControl+ZYAnalysis.m in Sources */ = {isa = PBXBuildFile; fileRef = FE01CF8B22F010E20047C1F6 /* UIControl+ZYAnalysis.m */; };
 		FE01CFBE22F010E20047C1F6 /* ParameterConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF8C22F010E20047C1F6 /* ParameterConfig.h */; };
-		FE01CFBF22F010E20047C1F6 /* ZYPageIOQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = FE01CF8D22F010E20047C1F6 /* ZYPageIOQueue.m */; };
 		FE01CFC022F010E20047C1F6 /* UIView+ZYNode.m in Sources */ = {isa = PBXBuildFile; fileRef = FE01CF8F22F010E20047C1F6 /* UIView+ZYNode.m */; };
 		FE01CFC122F010E20047C1F6 /* NSObject+ZYKvcCrash.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF9022F010E20047C1F6 /* NSObject+ZYKvcCrash.h */; };
 		FE01CFC222F010E20047C1F6 /* NSObject+ZYHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FE01CF9122F010E20047C1F6 /* NSObject+ZYHelper.m */; };
@@ -99,7 +97,6 @@
 		FE01CF8022F010E10047C1F6 /* ZYGlobalInfoHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYGlobalInfoHelper.h; sourceTree = "<group>"; };
 		FE01CF8122F010E10047C1F6 /* UIGestureRecognizer+ZYAnalysis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIGestureRecognizer+ZYAnalysis.m"; sourceTree = "<group>"; };
 		FE01CF8222F010E10047C1F6 /* UICollectionView+ZYAnalysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+ZYAnalysis.h"; sourceTree = "<group>"; };
-		FE01CF8322F010E10047C1F6 /* ZYPageIOQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYPageIOQueue.h; sourceTree = "<group>"; };
 		FE01CF8422F010E10047C1F6 /* UIApplication+ZYAnalysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+ZYAnalysis.h"; sourceTree = "<group>"; };
 		FE01CF8522F010E20047C1F6 /* UIViewController+ZYAnalysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ZYAnalysis.h"; sourceTree = "<group>"; };
 		FE01CF8622F010E20047C1F6 /* UICollectionView+ZYAnalysis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+ZYAnalysis.m"; sourceTree = "<group>"; };
@@ -109,7 +106,6 @@
 		FE01CF8A22F010E20047C1F6 /* ZYViewDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYViewDataHelper.h; sourceTree = "<group>"; };
 		FE01CF8B22F010E20047C1F6 /* UIControl+ZYAnalysis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+ZYAnalysis.m"; sourceTree = "<group>"; };
 		FE01CF8C22F010E20047C1F6 /* ParameterConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParameterConfig.h; sourceTree = "<group>"; };
-		FE01CF8D22F010E20047C1F6 /* ZYPageIOQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYPageIOQueue.m; sourceTree = "<group>"; };
 		FE01CF8F22F010E20047C1F6 /* UIView+ZYNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ZYNode.m"; sourceTree = "<group>"; };
 		FE01CF9022F010E20047C1F6 /* NSObject+ZYKvcCrash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ZYKvcCrash.h"; sourceTree = "<group>"; };
 		FE01CF9122F010E20047C1F6 /* NSObject+ZYHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ZYHelper.m"; sourceTree = "<group>"; };
@@ -221,25 +217,23 @@
 		FE01CF7A22F010E10047C1F6 /* Analysis */ = {
 			isa = PBXGroup;
 			children = (
-				FE01CF7B22F010E10047C1F6 /* UIApplication+ZYAnalysis.m */,
-				FE01CF7C22F010E10047C1F6 /* UIViewController+ZYAnalysis.m */,
-				FE01CF7D22F010E10047C1F6 /* UIControl+ZYAnalysis.h */,
-				FE01CF7E22F010E10047C1F6 /* ZYViewDataHelper.m */,
-				FE01CF7F22F010E10047C1F6 /* UITableView+ZYAnalysis.m */,
-				FE01CF8022F010E10047C1F6 /* ZYGlobalInfoHelper.h */,
-				FE01CF8122F010E10047C1F6 /* UIGestureRecognizer+ZYAnalysis.m */,
-				FE01CF8222F010E10047C1F6 /* UICollectionView+ZYAnalysis.h */,
-				FE01CF8322F010E10047C1F6 /* ZYPageIOQueue.h */,
-				FE01CF8422F010E10047C1F6 /* UIApplication+ZYAnalysis.h */,
-				FE01CF8522F010E20047C1F6 /* UIViewController+ZYAnalysis.h */,
-				FE01CF8622F010E20047C1F6 /* UICollectionView+ZYAnalysis.m */,
-				FE01CF8722F010E20047C1F6 /* UIGestureRecognizer+ZYAnalysis.h */,
-				FE01CF8822F010E20047C1F6 /* ZYGlobalInfoHelper.m */,
-				FE01CF8922F010E20047C1F6 /* UITableView+ZYAnalysis.h */,
-				FE01CF8A22F010E20047C1F6 /* ZYViewDataHelper.h */,
-				FE01CF8B22F010E20047C1F6 /* UIControl+ZYAnalysis.m */,
 				FE01CF8C22F010E20047C1F6 /* ParameterConfig.h */,
-				FE01CF8D22F010E20047C1F6 /* ZYPageIOQueue.m */,
+				FE01CF8422F010E10047C1F6 /* UIApplication+ZYAnalysis.h */,
+				FE01CF7B22F010E10047C1F6 /* UIApplication+ZYAnalysis.m */,
+				FE01CF8222F010E10047C1F6 /* UICollectionView+ZYAnalysis.h */,
+				FE01CF8622F010E20047C1F6 /* UICollectionView+ZYAnalysis.m */,
+				FE01CF7D22F010E10047C1F6 /* UIControl+ZYAnalysis.h */,
+				FE01CF8B22F010E20047C1F6 /* UIControl+ZYAnalysis.m */,
+				FE01CF8722F010E20047C1F6 /* UIGestureRecognizer+ZYAnalysis.h */,
+				FE01CF8122F010E10047C1F6 /* UIGestureRecognizer+ZYAnalysis.m */,
+				FE01CF8922F010E20047C1F6 /* UITableView+ZYAnalysis.h */,
+				FE01CF7F22F010E10047C1F6 /* UITableView+ZYAnalysis.m */,
+				FE01CF8522F010E20047C1F6 /* UIViewController+ZYAnalysis.h */,
+				FE01CF7C22F010E10047C1F6 /* UIViewController+ZYAnalysis.m */,
+				FE01CF8022F010E10047C1F6 /* ZYGlobalInfoHelper.h */,
+				FE01CF8822F010E20047C1F6 /* ZYGlobalInfoHelper.m */,
+				FE01CF8A22F010E20047C1F6 /* ZYViewDataHelper.h */,
+				FE01CF7E22F010E10047C1F6 /* ZYViewDataHelper.m */,
 			);
 			path = Analysis;
 			sourceTree = "<group>";
@@ -247,19 +241,19 @@
 		FE01CF8E22F010E20047C1F6 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				FE01CF8F22F010E20047C1F6 /* UIView+ZYNode.m */,
-				FE01CF9022F010E20047C1F6 /* NSObject+ZYKvcCrash.h */,
-				FE01CF9122F010E20047C1F6 /* NSObject+ZYHelper.m */,
 				FE01CF9222F010E20047C1F6 /* 20180719090759.json */,
-				FE01CF9322F010E20047C1F6 /* ZYHeader.h */,
 				FE01CF9422F010E20047C1F6 /* DataContainer.h */,
+				FE01CF9A22F010E20047C1F6 /* DataContainer.m */,
+				FE01CF9922F010E20047C1F6 /* document.text */,
 				FE01CF9522F010E20047C1F6 /* MethodSwizzingTool.h */,
+				FE01CF9B22F010E20047C1F6 /* MethodSwizzingTool.m */,
 				FE01CF9622F010E20047C1F6 /* NSObject+ZYHelper.h */,
+				FE01CF9122F010E20047C1F6 /* NSObject+ZYHelper.m */,
+				FE01CF9022F010E20047C1F6 /* NSObject+ZYKvcCrash.h */,
 				FE01CF9722F010E20047C1F6 /* NSObject+ZYKvcCrash.m */,
 				FE01CF9822F010E20047C1F6 /* UIView+ZYNode.h */,
-				FE01CF9922F010E20047C1F6 /* document.text */,
-				FE01CF9A22F010E20047C1F6 /* DataContainer.m */,
-				FE01CF9B22F010E20047C1F6 /* MethodSwizzingTool.m */,
+				FE01CF8F22F010E20047C1F6 /* UIView+ZYNode.m */,
+				FE01CF9322F010E20047C1F6 /* ZYHeader.h */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -301,7 +295,6 @@
 			files = (
 				FE01CFC122F010E20047C1F6 /* NSObject+ZYKvcCrash.h in Headers */,
 				FE01CFC522F010E20047C1F6 /* DataContainer.h in Headers */,
-				FE01CFB522F010E20047C1F6 /* ZYPageIOQueue.h in Headers */,
 				FE01CFD922F010E20047C1F6 /* Reachability.h in Headers */,
 				FE01CFBC22F010E20047C1F6 /* ZYViewDataHelper.h in Headers */,
 				FE01CFBB22F010E20047C1F6 /* UITableView+ZYAnalysis.h in Headers */,
@@ -469,7 +462,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE01CFBF22F010E20047C1F6 /* ZYPageIOQueue.m in Sources */,
 				FE01CFD822F010E20047C1F6 /* StatisticalRequest.m in Sources */,
 				FE01D03322F012410047C1F6 /* ZYNodeSelectorView.m in Sources */,
 				FE01CFC222F010E20047C1F6 /* NSObject+ZYHelper.m in Sources */,
@@ -649,6 +641,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = scfl.SCIO;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -676,6 +669,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = scfl.SCIO;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

@@ -10,12 +10,10 @@
 #import "ZYVisualSelectorWindow.h"
 #import "MethodSwizzingTool.h"
 #import "NSObject+ZYHelper.h"
-#import "Reachability.h"
-#import "ZYPageIOQueue.h"
 #import "ZYHeader.h"
+#import "StatisticalRequest.h"
 
 
-static const char *hostReachKey = "hostReachKey";
 static ZYVisualSelectorWindow *visualSelectorWindow;
 
 @implementation UIApplication (ZYAnalysis)
@@ -60,6 +58,17 @@ static ZYVisualSelectorWindow *visualSelectorWindow;
                     [MethodSwizzingTool swizzingForClass:[res_delegate class] originalSel:finOriSelector swizzingSel:finSwiSelector];
                 }
             }
+            
+            
+            // 替换applicationDidBecomeActive:
+            if ([res_delegate isContainSel:@selector(applicationDidBecomeActive:) inClass:[res_delegate class]]) {
+                SEL becOriSelector = @selector(applicationDidBecomeActive:);
+                SEL becSwiSelector = @selector(zy_temp_applicationDidBecomeActive:);
+                BOOL suc = [MethodSwizzingTool addMethodForClass:[res_delegate class] sel:becSwiSelector impClass:[self class] impSelector:becSwiSelector];
+                if (suc) {
+                    [MethodSwizzingTool swizzingForClass:[res_delegate class] originalSel:becOriSelector swizzingSel:becSwiSelector];
+                }
+            }
         });
     }
     
@@ -67,17 +76,8 @@ static ZYVisualSelectorWindow *visualSelectorWindow;
 }
 
 
-- (void)zy_temp_applicationWillResignActive:(UIApplication *)application {
-    // 保存页面 访问路径 数据
-    // [StatisticalRequest uploadEventInfos:[ZYPageIOQueue shareQueue].pageInfoArray];
-    
-    // 调用原方法
-    [self zy_temp_applicationWillResignActive:application];
-}
-
+/// APP 加载完成
 - (void)zy_temp_application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // 上传基本信息--- 启动时发送 --- 没有网路的时候缓存起来, 在其他数据发送前, 先检查此数据有没有缓存, 如果有, 优先发送基本信息.
-    [StatisticalRequest uploadBaseInfo];
     
     [self zy_temp_application:application didFinishLaunchingWithOptions:launchOptions];
     
@@ -87,9 +87,37 @@ static ZYVisualSelectorWindow *visualSelectorWindow;
     visualSelectorWindow.windowLevel = UIWindowLevelAlert+1;
 }
 
+/// APP 将进入后台
+- (void)zy_temp_applicationWillResignActive:(UIApplication *)application {
+    
+    // 保存此次启动sessionid
+    [[NSUserDefaults standardUserDefaults] setValue:[ZYGlobalInfoHelper sessionId] forKey:@"sessionid"];
+    
+    // 调用原方法
+    [self zy_temp_applicationWillResignActive:application];
+}
+
+
+/// APP 激活
+- (void)zy_temp_applicationDidBecomeActive:(UIApplication *)application {
+    // 更新/生成session_id
+    [ZYGlobalInfoHelper createSessionId];
+    
+    // 上传基本信息--- 启动时发送 --- 没有网路的时候缓存起来, 在其他数据发送前, 先检查此数据有没有缓存, 如果有, 优先发送基本信息.
+    [StatisticalRequest uploadBaseInfo];
+    
+    // 读取上次之前启动的sessionid, 上传数据
+    NSString *lastSessionId = [[NSUserDefaults standardUserDefaults] valueForKey:@"sessionid"];
+    if (lastSessionId.length) {
+        NSArray *data = [[DataCacheManager shareManager] eventDataArrayWithSessionId:[ZYGlobalInfoHelper sessionId]];
+        ZYPrintf(@"%@", data);
+    }
     
     
-    
+    [self zy_temp_applicationDidBecomeActive:application];
+}
+
+
 
     
     

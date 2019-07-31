@@ -74,6 +74,12 @@ NS_ASSUME_NONNULL_BEGIN
  APP每次启动代表一次会话,会话id暂时使用启动时的时间戳, 后续可能服务器分配, 或根据服务器时间生成
  */
 + (NSString *)sessionId;
+
+
+/**
+ 应用启动/进入前台的时候, 生成session id;
+ */
++ (void)createSessionId;
 @end
 
 NS_ASSUME_NONNULL_END

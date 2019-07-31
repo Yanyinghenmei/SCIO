@@ -87,16 +87,16 @@
 
 + (void)uploadBaseInfo {
     NSDictionary *info = @{p_deviceId : [ZYGlobalInfoHelper deviceId],
-                          p_deviceType : @"iphone",
-                          p_deviceModel : [ZYGlobalInfoHelper deviceModel],
-                          p_osType : @"iOS",
-                          p_osVersion : [ZYGlobalInfoHelper osVersion],
-                          p_appName : [ZYGlobalInfoHelper appName],
-                          p_appId : [ZYGlobalInfoHelper appId],
-                          p_appVersion : [ZYGlobalInfoHelper appVersion],
-                          p_deviceNetType : [ZYGlobalInfoHelper deviceNetType],
-                          p_deviceNetOperator : [ZYGlobalInfoHelper deviceNetOperator],
-                          p_sdkVersion : [ZYGlobalInfoHelper sdkVersion],
+                           p_deviceType : @"iphone",
+                           p_deviceModel : [ZYGlobalInfoHelper deviceModel],
+                           p_osType : @"iOS",
+                           p_osVersion : [ZYGlobalInfoHelper osVersion],
+                           p_appName : [ZYGlobalInfoHelper appName],
+                           p_appId : [ZYGlobalInfoHelper appId],
+                           p_appVersion : [ZYGlobalInfoHelper appVersion],
+                           p_deviceNetType : [ZYGlobalInfoHelper deviceNetType],
+                           p_deviceNetOperator : [ZYGlobalInfoHelper deviceNetOperator],
+                           p_sdkVersion : [ZYGlobalInfoHelper sdkVersion],
                           };
 
     NSDictionary *dic = @{p_deviceId : [ZYGlobalInfoHelper deviceId],

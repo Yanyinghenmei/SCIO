@@ -102,7 +102,7 @@
     
     // 视图xPath
     NSString *className = NSStringFromClass(view.class);
-    NSString *date = [NSString stringWithFormat:@"%.0f",[NSDate date].timeIntervalSince1970];
+    NSString *date = [NSString stringWithFormat:@"%f",[NSDate date].timeIntervalSince1970];
     NSString *tag = [NSString stringWithFormat:@"%zd",view.tag];
     
     

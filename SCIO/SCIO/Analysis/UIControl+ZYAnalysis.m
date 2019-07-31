@@ -33,26 +33,15 @@
         NSString *actionName = NSStringFromSelector(action);
         NSString *targetName = NSStringFromClass([target class]);
         NSString *className = NSStringFromClass(self.class);
-        NSString *date = [NSString stringWithFormat:@"%.0f",[NSDate date].timeIntervalSince1970];
-        NSString *tag = [NSString stringWithFormat:@"%zd",self.tag];
+        NSString *date = [NSString stringWithFormat:@"%f",[NSDate date].timeIntervalSince1970];
         
         NSString *analysisName = @"";
         if ([self respondsToSelector:@selector(titleForState:)]) {
             analysisName = [(UIButton *)self titleForState:self.selected?UIControlStateSelected:UIControlStateNormal];
         }
         
-        NSDictionary *dic = @{p_elementPath:elementPath,
-                              p_actionName:actionName,
-                              p_targetName:targetName,
-                              p_className:className,
-                              p_date:date,
-                              p_tag:tag,
-                              p_analysisName:analysisName,
-                              p_selected:@(self.selected)
-                              };
-        ZYPrintf(@"%@",dic);
-        // 上传数据
-        [StatisticalRequest uploadEventInfos:@[dic]];
+        // 保存数据
+        [[DataCacheManager shareManager] saveEventDataWithSessionId:[ZYGlobalInfoHelper sessionId] targetName:targetName actionName:actionName className:className elementPath:elementPath analysisName:analysisName date:date indexPath:nil selected:self.selected tag:self.tag];
     }
     
     [self zy_sendAction:action to:target forEvent:event];

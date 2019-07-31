@@ -15,6 +15,7 @@
 
 static NetworkStatus _status;
 static Reachability *_hostReach;
+static NSString *_sessionId;
 @implementation ZYGlobalInfoHelper
     
 + (void)load {
@@ -111,7 +112,11 @@ static Reachability *_hostReach;
 
 
 + (NSString *)sessionId {
-    return [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
+    return _sessionId;
+}
+
++ (void)createSessionId {
+    _sessionId = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
 }
 
 @end

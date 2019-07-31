@@ -85,8 +85,7 @@
         NSString *actionName = gesture.methodName;
         NSString *targetName = gesture.targetName;
         NSString *className = NSStringFromClass(gesture.view.class);
-        NSString *date = [NSString stringWithFormat:@"%.0f",[NSDate date].timeIntervalSince1970];
-        NSString *tag = [NSString stringWithFormat:@"%zd",gesture.view.tag];
+        NSString *date = [NSString stringWithFormat:@"%f",[NSDate date].timeIntervalSince1970];
         NSString *analysisName = @"";
         if ([gesture.view isKindOfClass:UILabel.class]) {
             analysisName = [(UILabel *)gesture.view text];
@@ -101,16 +100,8 @@
             return;
         }
         
-        NSDictionary *dic = @{p_elementPath:elementPath,
-                              p_actionName:actionName,
-                              p_targetName:targetName,
-                              p_className:className,
-                              p_date:date,
-                              p_tag:tag,
-                              p_analysisName:analysisName};
-        ZYPrintf(@"%@",dic);
-        // 上传数据
-        [StatisticalRequest uploadEventInfos:@[dic]];
+        // 保存数据
+        [[DataCacheManager shareManager] saveEventDataWithSessionId:[ZYGlobalInfoHelper sessionId] targetName:targetName actionName:actionName className:className elementPath:elementPath analysisName:analysisName date:date indexPath:nil selected:false tag:gesture.view.tag];
     }
     
     // 最后调用原方法
