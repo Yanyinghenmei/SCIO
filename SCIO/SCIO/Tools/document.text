@@ -25,7 +25,7 @@ pagePara 预留字段 - 只存在后台统计配置中, 不出自移动端
 适合针对某一个版本进行行为分析.
 
 
-/////// 字段及其简写
+/////// 字段及其简写  -- 以 ParameterConfig.h 中的配置为准
 
 1、access_type  --- ast  pc mac iphone android  机器类型
 2   web_site（域名） ---  webs  域名来源
@@ -134,11 +134,17 @@ target = TableViewController;
 
 
 /// 后续计划
-1. 视图访问路径
-2. 全埋点探索 与 配置表
-3. mac/设备id/设备系统版本...等信息获取
-3. EventId 生成:
-  为了实现在可视化圈选的时的事件的唯一性，每一个无埋点的事件采集都必须有且仅有一个唯一的标识符来区分不同的事件。不同于代码埋点，用户可以自定义的配置自己所需的EventID，无埋点过程中，需要SDK自己配置每一个采集事件的EventID，通过可视化圈选的操作，筛选出相应的EventID所对应的数据信息。HubbleData采用的是构造view唯一标识字符串的方式去唯一的标识这样的一个事件，主要由view的层级结构path路径、该view的所在页面类名以及view所带的一些自身固定属性等构成，并通过SHA256编码来获取唯一的EventID
+1. 数据库线程安全
+    准则:
+        数据库连接都在一个线程中。
+        数据库在多个线程都有连接，但不是同时连接。
+    目前所有数据库操作都在主线程, 可以将所有数据库操作放在单一线程
+
+2. 数据库性能优化 参考 https://www.jianshu.com/p/068ecd1cf1b5
+3. 使用zlib进行数据压缩, 需要依赖 libz.tbd
+4. 代码埋点 API 设计
+5. 全埋点探索 与 配置表
+
 
 
 
@@ -148,3 +154,5 @@ target = TableViewController;
 集成注意:
 1. 设置为 Allow Arbitrary Loads / 或者使用白名单, 需要研究
 2. 依赖库 CoreTelephony
+3. 依赖 sqlite3.tbd
+4. bitcode 设为NO
