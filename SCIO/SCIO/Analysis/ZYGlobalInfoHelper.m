@@ -13,23 +13,31 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 
-static NetworkStatus _status;
-static Reachability *_hostReach;
-static NSString *_sessionId;
+static ZYGlobalInfoHelper *_helper = nil;
+
+@interface ZYGlobalInfoHelper ()
+@property (nonatomic,strong) Reachability *hostReach;
+@property (nonatomic,copy) NSString *sessionId;
+@property (nonatomic,assign) NetworkStatus status;
+@end
+
 @implementation ZYGlobalInfoHelper
-    
-+ (void)load {
+
++ (instancetype)shareHelper {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+        _helper = [ZYGlobalInfoHelper new];
         
-        _status = NotReachable;
-        _hostReach = [Reachability reachabilityWithHostName:@"www.baidu.com"];
-        [_hostReach startNotifier];
+        [[NSNotificationCenter defaultCenter] addObserver:_helper selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+        
+        _helper.status = NotReachable;
+        _helper.hostReach = [Reachability reachabilityWithHostName:@"www.baidu.com"];
+        [_helper.hostReach startNotifier];
     });
+    return _helper;
 }
     // kReachabilityChangedNotification observer
-+(void)reachabilityChanged:(NSNotification *)note {
+-(void)reachabilityChanged:(NSNotification *)note {
     Reachability *currReach = [note object];
     NSParameterAssert([currReach isKindOfClass:[Reachability class]]);
     
@@ -37,19 +45,19 @@ static NSString *_sessionId;
     _status = [currReach currentReachabilityStatus];
 }
 
-+ (NSString *)mac {
+- (NSString *)mac {
     return @"iOS设备无法获取正确的 Mac address";
 }
 
-+ (NSString *)deviceId {
+- (NSString *)deviceId {
     return [[[UIDevice currentDevice] identifierForVendor] UUIDString];
 }
 
-+ (NSString *)osVersion {
+- (NSString *)osVersion {
     return [NSString stringWithFormat:@"iOS %.2f",[[[UIDevice currentDevice] systemVersion]   floatValue]];
 }
 
-+ (NSString *)deviceModel {
+- (NSString *)deviceModel {
     
     // Gets a string with the device model
     size_t size;
@@ -62,11 +70,11 @@ static NSString *_sessionId;
     return platform;
 }
 
-+ (NSString *)deviceNetType {
+- (NSString *)deviceNetType {
     return [NSString stringWithFormat:@"%zd",_status];
 }
 
-+ (NSString *)deviceNetOperator {
+- (NSString *)deviceNetOperator {
     CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
     CTCarrier *carrier = [info subscriberCellularProvider];
     
@@ -88,21 +96,21 @@ static NSString *_sessionId;
 }
 
 
-+ (NSString *)sdkVersion {
+- (NSString *)sdkVersion {
     return @"1.0";
 }
 
-+ (NSString *)appVersion {
+- (NSString *)appVersion {
     // framework 中获取版本号的方法可能会变化, 到时候再说吧
     // app版本
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 }
 
-+ (NSString *)appId {
+- (NSString *)appId {
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
 }
 
-+ (NSString *)appName {
+- (NSString *)appName {
     NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
     if (!name) {
         name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
@@ -111,12 +119,15 @@ static NSString *_sessionId;
 }
 
 
-+ (NSString *)sessionId {
+- (NSString *)sessionId {
+    if (!_sessionId) {
+        _sessionId = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
+    }
     return _sessionId;
 }
 
-+ (void)createSessionId {
-    _sessionId = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
+- (void)clearCurrentSessionId {
+    _sessionId = nil;
 }
 
 @end

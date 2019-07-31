@@ -90,29 +90,20 @@ static ZYVisualSelectorWindow *visualSelectorWindow;
 /// APP 将进入后台
 - (void)zy_temp_applicationWillResignActive:(UIApplication *)application {
     
-    // 保存此次启动sessionid
-    [[NSUserDefaults standardUserDefaults] setValue:[ZYGlobalInfoHelper sessionId] forKey:@"sessionid"];
+    // clearCurrentSession
+    [[ZYGlobalInfoHelper shareHelper] clearCurrentSessionId];
     
-    // 调用原方法
     [self zy_temp_applicationWillResignActive:application];
 }
 
 
 /// APP 激活
 - (void)zy_temp_applicationDidBecomeActive:(UIApplication *)application {
-    // 更新/生成session_id
-    [ZYGlobalInfoHelper createSessionId];
-    
     // 上传基本信息--- 启动时发送 --- 没有网路的时候缓存起来, 在其他数据发送前, 先检查此数据有没有缓存, 如果有, 优先发送基本信息.
     [StatisticalRequest uploadBaseInfo];
     
-    // 读取上次之前启动的sessionid, 上传数据
-    NSString *lastSessionId = [[NSUserDefaults standardUserDefaults] valueForKey:@"sessionid"];
-    if (lastSessionId.length) {
-        NSArray *data = [[DataCacheManager shareManager] eventDataArrayWithSessionId:[ZYGlobalInfoHelper sessionId]];
-        ZYPrintf(@"%@", data);
-    }
-    
+    // 读取之前启动的sessionid, 上传数据
+    [[DataCacheManager shareManager] uploadCacheData];
     
     [self zy_temp_applicationDidBecomeActive:application];
 }

@@ -69,7 +69,7 @@
         NSString *analysisName = @"";
         
         // 保存数据
-        [[DataCacheManager shareManager] saveEventDataWithSessionId:[ZYGlobalInfoHelper sessionId] targetName:targetName actionName:actionName className:className elementPath:elementPath analysisName:analysisName date:date indexPath:indexPathStr selected:false tag:collectionView.tag];
+        [[DataCacheManager shareManager] saveEventDataWithSessionId:[[ZYGlobalInfoHelper shareHelper]sessionId] targetName:targetName actionName:actionName className:className elementPath:elementPath analysisName:analysisName date:date indexPath:indexPathStr selected:false tag:collectionView.tag];
     }
     
     // 最后调用原方法

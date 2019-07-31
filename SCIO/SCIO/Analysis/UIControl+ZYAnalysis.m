@@ -41,7 +41,7 @@
         }
         
         // 保存数据
-        [[DataCacheManager shareManager] saveEventDataWithSessionId:[ZYGlobalInfoHelper sessionId] targetName:targetName actionName:actionName className:className elementPath:elementPath analysisName:analysisName date:date indexPath:nil selected:self.selected tag:self.tag];
+        [[DataCacheManager shareManager] saveEventDataWithSessionId:[[ZYGlobalInfoHelper shareHelper] sessionId] targetName:targetName actionName:actionName className:className elementPath:elementPath analysisName:analysisName date:date indexPath:nil selected:self.selected tag:self.tag];
     }
     
     [self zy_sendAction:action to:target forEvent:event];

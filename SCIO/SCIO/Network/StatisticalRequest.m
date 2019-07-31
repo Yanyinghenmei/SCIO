@@ -29,7 +29,8 @@
     return instance;
 }
 
-+ (void)postUploadStatisticsWithUrlString:(NSString *)urlString params:(NSDictionary *)params completionHandler:(void(^)(NSDictionary *data))completionHandler {
++ (void)postUploadStatisticsWithUrlString:(NSString *)urlString params:(NSDictionary *)params completionHandler:(void (^)(NSDictionary * _Nullable, NSError * _Nullable))completionHandler {
+    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     request.URL = [NSURL URLWithString:urlString];
     request.HTTPMethod = @"POST";
@@ -43,21 +44,20 @@
     NSURLSessionDataTask *dataTask = [[StatisticalRequest shared] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (!error) {
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            ZYPrintf(@"请求成功:\n%@",[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
             dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler(dataDict);
+                completionHandler(dataDict, nil);
             });
         } else {
-            ZYPrintf(@"请求错误:\n%@",error);
             dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler(@{@"error":error});
+                completionHandler(nil, error);
             });
         }
     }];
     [dataTask resume];
 }
 
-+ (void)getUploadStatisticsWithUrlString:(NSString *)urlString params:(NSDictionary *)params completionHandler:(void(^)(NSDictionary *data))completionHandler {
++ (void)getUploadStatisticsWithUrlString:(NSString *)urlString params:(NSDictionary *)params completionHandler:(nonnull void (^)(NSDictionary * _Nullable, NSError * _Nullable))completionHandler {
+    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     NSMutableString *paramsStr = [[NSMutableString alloc] init];
     [params enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
@@ -69,14 +69,12 @@
     NSURLSessionDataTask *dataTask = [[StatisticalRequest shared] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (!error) {
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            NSLog(@"请求成功:\n%@",[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
             dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler(dataDict);
+                completionHandler(dataDict, nil);
             });
         } else {
-            NSLog(@"请求错误:\n%@",error);
             dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler(@{@"error":error});
+                completionHandler(nil, error);
             });
         }
     }];
@@ -84,54 +82,59 @@
 }
 
 
-
 + (void)uploadBaseInfo {
-    NSDictionary *info = @{p_deviceId : [ZYGlobalInfoHelper deviceId],
+    NSDictionary *info = @{p_deviceId : [[ZYGlobalInfoHelper shareHelper] deviceId],
                            p_deviceType : @"iphone",
-                           p_deviceModel : [ZYGlobalInfoHelper deviceModel],
+                           p_deviceModel : [[ZYGlobalInfoHelper shareHelper] deviceModel],
                            p_osType : @"iOS",
-                           p_osVersion : [ZYGlobalInfoHelper osVersion],
-                           p_appName : [ZYGlobalInfoHelper appName],
-                           p_appId : [ZYGlobalInfoHelper appId],
-                           p_appVersion : [ZYGlobalInfoHelper appVersion],
-                           p_deviceNetType : [ZYGlobalInfoHelper deviceNetType],
-                           p_deviceNetOperator : [ZYGlobalInfoHelper deviceNetOperator],
-                           p_sdkVersion : [ZYGlobalInfoHelper sdkVersion],
+                           p_osVersion : [[ZYGlobalInfoHelper shareHelper] osVersion],
+                           p_appName : [[ZYGlobalInfoHelper shareHelper] appName],
+                           p_appId : [[ZYGlobalInfoHelper shareHelper] appId],
+                           p_appVersion : [[ZYGlobalInfoHelper shareHelper] appVersion],
+                           p_deviceNetType : [[ZYGlobalInfoHelper shareHelper] deviceNetType],
+                           p_deviceNetOperator : [[ZYGlobalInfoHelper shareHelper] deviceNetOperator],
+                           p_sdkVersion : [[ZYGlobalInfoHelper shareHelper] sdkVersion],
                           };
 
-    NSDictionary *dic = @{p_deviceId : [ZYGlobalInfoHelper deviceId],
+    NSDictionary *dic = @{p_deviceId : [[ZYGlobalInfoHelper shareHelper] deviceId],
                           p_type : p_type_deviceData,
-                          p_sessionId : [ZYGlobalInfoHelper sessionId],
+                          p_sessionId : [[ZYGlobalInfoHelper shareHelper] sessionId],
                           p_data : info,
                            };
     
-    [self postUploadStatisticsWithUrlString:BASE_API params:dic completionHandler:^(NSDictionary * _Nonnull data) {
-        ZYPrintf(@"%@",data);
+    [self postUploadStatisticsWithUrlString:BASE_API params:dic completionHandler:^(NSDictionary * _Nullable data, NSError * _Nullable error) {
+        if (error) {
+            // 网络错误 不做任何处理, 下次再上传
+        }
     }];
 }
 
-+ (void)uploadEventInfos:(NSArray *)infos {
-    NSDictionary *dic = @{p_deviceId : [ZYGlobalInfoHelper deviceId],
++ (void)uploadEventInfos:(NSArray *)infos callback:(nonnull void (^)(NSError * _Nullable))callback {
+    NSDictionary *dic = @{p_deviceId : [[ZYGlobalInfoHelper shareHelper] deviceId],
                           p_type : p_type_eventData,
-                          p_sessionId : [ZYGlobalInfoHelper sessionId],
+                          p_sessionId : [[ZYGlobalInfoHelper shareHelper] sessionId],
                           p_data : infos,};
-    [self postUploadStatisticsWithUrlString:BASE_API params:dic completionHandler:^(NSDictionary * _Nonnull data) {
-        ZYPrintf(@"%@",data);
+    [self postUploadStatisticsWithUrlString:BASE_API params:dic completionHandler:^(NSDictionary * _Nullable data, NSError * _Nullable error) {
+        if (callback) {
+            callback(error);
+        }
     }];
 }
 
-+ (void)uploadPageVisitInfos:(NSArray *)infos {
-    NSDictionary *dic = @{p_deviceId : [ZYGlobalInfoHelper deviceId],
++ (void)uploadPageVisitInfos:(NSArray *)infos callback:(nonnull void (^)(NSError * _Nullable))callback {
+    NSDictionary *dic = @{p_deviceId : [[ZYGlobalInfoHelper shareHelper] deviceId],
                           p_type : p_type_pageData,
-                          p_sessionId : [ZYGlobalInfoHelper sessionId],
+                          p_sessionId : [[ZYGlobalInfoHelper shareHelper] sessionId],
                           p_data : infos,};
-    [self postUploadStatisticsWithUrlString:BASE_API params:dic completionHandler:^(NSDictionary * _Nonnull data) {
-        ZYPrintf(@"%@",data);
+    [self postUploadStatisticsWithUrlString:BASE_API params:dic completionHandler:^(NSDictionary * _Nullable data, NSError * _Nullable error) { 
+        if (callback) {
+            callback(error);
+        }
     }];
 }
 
 /**
- 后台通过日志的方式记录数据, 所以也没有请求反馈
+ 后台通过日志的方式记录数据, 所以也没有请求反馈 --- 暂时废弃
  */
 + (void)temporaryUploadRequestWithDataString:(NSString *)string {
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];

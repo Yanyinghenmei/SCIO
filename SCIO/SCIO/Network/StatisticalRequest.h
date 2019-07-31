@@ -13,11 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface StatisticalRequest : NSObject
 + (void)postUploadStatisticsWithUrlString:(NSString *)urlString
                                    params:(NSDictionary *)params
-                        completionHandler:(void(^)(NSDictionary *data))completionHandler;
+                        completionHandler:(void(^)(NSDictionary * _Nullable data,NSError * _Nullable error))completionHandler;
 
 + (void)getUploadStatisticsWithUrlString:(NSString *)urlString
                                   params:(NSDictionary *)params
-                       completionHandler:(void(^)(NSDictionary *data))completionHandler;
+                       completionHandler:(void(^)(NSDictionary * _Nullable data, NSError * _Nullable error))completionHandler;
 
 
 
@@ -30,13 +30,13 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  上传事件信息
  */
-+ (void)uploadEventInfos:(NSArray *)infos;
++ (void)uploadEventInfos:(NSArray *)infos callback:(void(^)(NSError * _Nullable error))callback;
 
 
 /**
  上传页面访问信息
  */
-+ (void)uploadPageVisitInfos:(NSArray *)infos;
++ (void)uploadPageVisitInfos:(NSArray *)infos callback:(void(^)(NSError * _Nullable error))callback;
 @end
 
 NS_ASSUME_NONNULL_END

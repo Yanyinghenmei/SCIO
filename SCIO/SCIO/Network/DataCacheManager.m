@@ -10,6 +10,9 @@
 #import "ZYDefine.h"
 #import "StatisticalRequest.h"
 #import "ParameterConfig.h"
+#import "ZYGlobalInfoHelper.h"
+#import "StatisticalRequest.h"
+
 #import <zlib.h>
 #import <sqlite3.h>
 
@@ -171,7 +174,8 @@
 }
 
 - (NSArray *)eventDataArrayWithSessionId:(NSString *)sessionId {
-    sessionId = @"1564539660.995725";
+    NSMutableArray *dataArray = @[].mutableCopy;
+    
     int res = [self openDB];
     if (res == SQLITE_OK) {
         
@@ -182,7 +186,6 @@
         // 如果sql 语句没有问题
         if (sqlite3_prepare_v2(_db, event_select_sql, -1, &stmt, NULL) == SQLITE_OK) {
             
-            NSMutableArray *dataArray = @[].mutableCopy;
             
             // 每调用一次 sqlite3_step 函数, stmt就会指向下一条记录
             while (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -200,12 +203,6 @@
                 const unsigned char *selected_value = sqlite3_column_text(stmt, 9);
                 const unsigned char *tag_value = sqlite3_column_text(stmt, 10);
                 
-//                p_sessionId, p_targetName,
-//                p_actionName, p_className,
-//                p_elementPath, p_analysisName,
-//                p_date, p_indexPath,
-//                p_selected,p_tag
-                
                 NSDictionary *dic
                 = @{p_targetName : [NSString stringWithUTF8String:(const char *)target_name],
                     p_actionName : [NSString stringWithUTF8String:(const char *)action_name],
@@ -220,29 +217,30 @@
                 [dataArray addObject:dic];
             }
             
-            return dataArray.copy;
         } else {
             ZYPrintf(@"sql 语句有问题");
         }
         
         [self closeDB];
     }
-    return nil;
+    return dataArray.copy;
 }
 
 
 - (NSArray *)pageVisitDataArrayWithSessionId:(NSString *)sessionId {
+    
+    NSMutableArray *dataArray = @[].mutableCopy;
+    
     int res = [self openDB];
     if (res == SQLITE_OK) {
         
-        NSString *eventSelectSql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@=%@;", PAGE_T_NAME, p_sessionId, sessionId];
+        NSString *eventSelectSql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = '%@';", PAGE_T_NAME, p_sessionId, sessionId];
         const char *event_select_sql = eventSelectSql.UTF8String;
         sqlite3_stmt *stmt = NULL;
         
         // 如果sql 语句没有问题
         if (sqlite3_prepare_v2(_db, event_select_sql, -1, &stmt, NULL) == SQLITE_OK) {
             
-            NSMutableArray *dataArray = @[].mutableCopy;
             
             // 每调用一次 sqlite3_step 函数, stmt就会指向下一条记录
             while (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -251,14 +249,16 @@
                 // int id = sqlite3_column_int(stmt, 0);
                 // const unsigned char *session_id = sqlite3_column_text(stmt, 1);
                 const unsigned char *target_name = sqlite3_column_text(stmt, 2);
-                const unsigned char *class_name = sqlite3_column_text(stmt, 3);
-                const unsigned char *element_path = sqlite3_column_text(stmt, 4);
-                const unsigned char *analysis_name = sqlite3_column_text(stmt, 5);
-                const unsigned char *date_value = sqlite3_column_text(stmt, 6);
-                const unsigned char *tag_value = sqlite3_column_text(stmt, 7);
+                const unsigned char *action_name = sqlite3_column_text(stmt, 3);
+                const unsigned char *class_name = sqlite3_column_text(stmt, 4);
+                const unsigned char *element_path = sqlite3_column_text(stmt, 5);
+                const unsigned char *analysis_name = sqlite3_column_text(stmt, 6);
+                const unsigned char *date_value = sqlite3_column_text(stmt, 7);
+                const unsigned char *tag_value = sqlite3_column_text(stmt, 8);
                 
                 NSDictionary *dic
                 = @{p_targetName : [NSString stringWithUTF8String:(const char *)target_name],
+                    p_actionName : [NSString stringWithUTF8String:(const char *)action_name],
                     p_className : [NSString stringWithUTF8String:(const char *)class_name],
                     p_elementPath : [NSString stringWithUTF8String:(const char *)element_path],
                     p_analysisName : [NSString stringWithUTF8String:(const char *)analysis_name],
@@ -268,14 +268,139 @@
                 ZYPrintf(@"----%@", dic);
                 [dataArray addObject:dic];
             }
-            
-            return dataArray.copy;
         } else {
             ZYPrintf(@"sql 语句有问题");
         }
         
         [self closeDB];
     }
-    return nil;
+    return dataArray.copy;
 }
+
+
+- (void)cleanEventDataWithSessionId:(NSString *)sessionId {
+    int res = [self openDB];
+    if (res == SQLITE_OK) {
+        
+        NSString *eventDeleteSql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = '%@';", EVENT_T_NAME, p_sessionId, sessionId];
+        const char *event_delete_sql = eventDeleteSql.UTF8String;
+        
+        char *error_msg = NULL;
+        sqlite3_exec(_db, event_delete_sql, NULL, NULL, &error_msg);
+        
+        if (error_msg) {
+            ZYPrintf(@"删除表:%@ 中数据失败: %s", EVENT_T_NAME, error_msg);
+        }
+        
+        [self closeDB];
+    }
+}
+
+- (void)cleanPageVisitDataWithSessionId:(NSString *)sessionId {
+    int res = [self openDB];
+    if (res == SQLITE_OK) {
+        
+        NSString *pageDeleteSql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = '%@';", PAGE_T_NAME, p_sessionId, sessionId];
+        const char *page_delete_sql = pageDeleteSql.UTF8String;
+        
+        char *error_msg = NULL;
+        sqlite3_exec(_db, page_delete_sql, NULL, NULL, &error_msg);
+        
+        if (error_msg) {
+            ZYPrintf(@"删除表:%@ 中数据失败: %s", PAGE_T_NAME, error_msg);
+        }
+        
+        [self closeDB];
+    }
+}
+
+- (NSArray *)allSessionId {
+    NSMutableArray *pageSessionArr = @[].mutableCopy;
+    NSMutableArray *eventSessionArr = @[].mutableCopy;
+    
+    int res = [self openDB];
+    if (res == SQLITE_OK) {
+        sqlite3_stmt *stmt = NULL;
+        
+        /// 查询page数据表中的所有sessionid, 去重
+        NSString *pageDistinctSql = [NSString stringWithFormat:@"SELECT DISTINCT %@ FROM %@;", p_sessionId, PAGE_T_NAME];
+        const char *page_distinct_sql = pageDistinctSql.UTF8String;
+        
+        // 如果sql 语句没有问题
+        if (sqlite3_prepare_v2(_db, page_distinct_sql, -1, &stmt, NULL) == SQLITE_OK) {
+            // 每调用一次 sqlite3_step 函数, stmt就会指向下一条记录
+            while (sqlite3_step(stmt) == SQLITE_ROW) {
+                const unsigned char *session_id = sqlite3_column_text(stmt, 0);
+                [pageSessionArr addObject:[NSString stringWithUTF8String:(const char *)session_id]];
+            }
+        } else {
+            ZYPrintf(@"sql 语句有问题");
+        }
+        
+        /// 查询event表中的说有sessionid, 去重
+        NSString *eventDistinctSql = [NSString stringWithFormat:@"SELECT DISTINCT %@ FROM %@;", p_sessionId, EVENT_T_NAME];
+        const char *event_distinct_sql = eventDistinctSql.UTF8String;
+        
+        // 如果sql 语句没有问题
+        if (sqlite3_prepare_v2(_db, event_distinct_sql, -1, &stmt, NULL) == SQLITE_OK) {
+            // 每调用一次 sqlite3_step 函数, stmt就会指向下一条记录
+            while (sqlite3_step(stmt) == SQLITE_ROW) {
+                const unsigned char *session_id = sqlite3_column_text(stmt, 0);
+                [eventSessionArr addObject:[NSString stringWithUTF8String:(const char *)session_id]];
+            }
+        } else {
+            ZYPrintf(@"sql 语句有问题");
+        }
+        
+        // 关闭数据库
+        [self closeDB];
+    }
+    
+    // 取并集
+    NSMutableSet *pageSet = [NSMutableSet setWithArray:pageSessionArr];
+    NSSet *eventSet = [NSSet setWithArray:eventSessionArr];
+    [pageSet unionSet:eventSet];
+    
+    NSArray *sortDesc = @[[[NSSortDescriptor alloc] initWithKey:nil ascending:YES]];
+    NSArray *sortSetArray = [pageSet sortedArrayUsingDescriptors:sortDesc];
+    
+    return sortSetArray;
+}
+
+
+
+- (void)uploadCacheData {
+    NSArray *allSessionId = [self allSessionId];
+    NSString *currentSessionId = [[ZYGlobalInfoHelper shareHelper] sessionId];
+    
+    for (NSString *sesid in allSessionId) {
+        // 本次启动得到的数据不上传
+        if ([sesid isEqualToString:currentSessionId]) {
+            continue;
+        }
+        
+        NSArray *eventData = [[DataCacheManager shareManager] eventDataArrayWithSessionId:sesid];
+        NSArray *pageVisitData = [[DataCacheManager shareManager] pageVisitDataArrayWithSessionId:sesid];
+        
+        // 如果没有网不上传
+        if ([[ZYGlobalInfoHelper shareHelper].deviceNetType isEqualToString:@"0"]) {
+            return;
+        }
+        
+        [StatisticalRequest uploadEventInfos:eventData callback:^(NSError * _Nullable error) {
+            NSAssert(error == nil, @"网络错误");
+            if (!error) {
+                [[DataCacheManager shareManager] cleanEventDataWithSessionId:sesid];
+            }
+        }];
+        
+        [StatisticalRequest uploadPageVisitInfos:pageVisitData callback:^(NSError * _Nullable error) {
+            NSAssert(error == nil, @"网络错误");
+            if (!error) {
+                [[DataCacheManager shareManager] cleanPageVisitDataWithSessionId:sesid];
+            }
+        }];
+    }
+}
+
 @end

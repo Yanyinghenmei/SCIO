@@ -101,7 +101,7 @@
         }
         
         // 保存数据
-        [[DataCacheManager shareManager] saveEventDataWithSessionId:[ZYGlobalInfoHelper sessionId] targetName:targetName actionName:actionName className:className elementPath:elementPath analysisName:analysisName date:date indexPath:nil selected:false tag:gesture.view.tag];
+        [[DataCacheManager shareManager] saveEventDataWithSessionId:[[ZYGlobalInfoHelper shareHelper] sessionId] targetName:targetName actionName:actionName className:className elementPath:elementPath analysisName:analysisName date:date indexPath:nil selected:false tag:gesture.view.tag];
     }
     
     // 最后调用原方法

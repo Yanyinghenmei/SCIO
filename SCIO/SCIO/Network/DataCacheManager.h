@@ -39,11 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
                                   date:(NSString *)date
                                    tag:(NSInteger)tag;
 
-- (NSArray *)eventDataArrayWithSessionId:(NSString *)sessionId;
-- (NSArray *)pageVisitDataArrayWithSessionId:(NSString *)sessionId;
-
-- (void)cleanEventData;
-- (void)cleanPageVisitData;
+- (void)uploadCacheData;
 
 @end
 

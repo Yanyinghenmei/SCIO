@@ -47,7 +47,7 @@
     }
 
     // 保存数据
-    [[DataCacheManager shareManager] savePageVisitDataWithSessionId:[ZYGlobalInfoHelper sessionId] targetName:targetName actionName:actionName className:className elementPath:elementPath analysisName:analysisName date:date tag:self.view.tag];
+    [[DataCacheManager shareManager] savePageVisitDataWithSessionId:[[ZYGlobalInfoHelper shareHelper] sessionId] targetName:targetName actionName:actionName className:className elementPath:elementPath analysisName:analysisName date:date tag:self.view.tag];
 }
 - (void)zy_viewWillDisappear:(BOOL)animated {
     [self zy_viewWillDisappear:animated];
@@ -64,7 +64,7 @@
     }
     
     // 保存数据
-    [[DataCacheManager shareManager] savePageVisitDataWithSessionId:[ZYGlobalInfoHelper sessionId] targetName:targetName actionName:actionName className:className elementPath:elementPath analysisName:analysisName date:date tag:self.view.tag];
+    [[DataCacheManager shareManager] savePageVisitDataWithSessionId:[[ZYGlobalInfoHelper shareHelper] sessionId] targetName:targetName actionName:actionName className:className elementPath:elementPath analysisName:analysisName date:date tag:self.view.tag];
 }
 
 @end
