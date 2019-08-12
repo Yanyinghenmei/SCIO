@@ -23,14 +23,13 @@
 
 /* Begin PBXBuildFile section */
 		EF30959B67AFC26C7CF9E08C /* libPods-SCIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48302E1410691840F4F07F18 /* libPods-SCIO.a */; };
-		FE01CF6222F00D850047C1F6 /* SCIO.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF6022F00D850047C1F6 /* SCIO.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FE01CFAC22F010E20047C1F6 /* ZYDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF7922F010E10047C1F6 /* ZYDefine.h */; };
 		FE01CFAD22F010E20047C1F6 /* UIApplication+ZYAnalysis.m in Sources */ = {isa = PBXBuildFile; fileRef = FE01CF7B22F010E10047C1F6 /* UIApplication+ZYAnalysis.m */; };
 		FE01CFAE22F010E20047C1F6 /* UIViewController+ZYAnalysis.m in Sources */ = {isa = PBXBuildFile; fileRef = FE01CF7C22F010E10047C1F6 /* UIViewController+ZYAnalysis.m */; };
 		FE01CFAF22F010E20047C1F6 /* UIControl+ZYAnalysis.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF7D22F010E10047C1F6 /* UIControl+ZYAnalysis.h */; };
 		FE01CFB022F010E20047C1F6 /* ZYViewDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FE01CF7E22F010E10047C1F6 /* ZYViewDataHelper.m */; };
 		FE01CFB122F010E20047C1F6 /* UITableView+ZYAnalysis.m in Sources */ = {isa = PBXBuildFile; fileRef = FE01CF7F22F010E10047C1F6 /* UITableView+ZYAnalysis.m */; };
-		FE01CFB222F010E20047C1F6 /* ZYGlobalInfoHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF8022F010E10047C1F6 /* ZYGlobalInfoHelper.h */; };
+		FE01CFB222F010E20047C1F6 /* ZYGlobalInfoHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF8022F010E10047C1F6 /* ZYGlobalInfoHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FE01CFB322F010E20047C1F6 /* UIGestureRecognizer+ZYAnalysis.m in Sources */ = {isa = PBXBuildFile; fileRef = FE01CF8122F010E10047C1F6 /* UIGestureRecognizer+ZYAnalysis.m */; };
 		FE01CFB422F010E20047C1F6 /* UICollectionView+ZYAnalysis.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF8222F010E10047C1F6 /* UICollectionView+ZYAnalysis.h */; };
 		FE01CFB622F010E20047C1F6 /* UIApplication+ZYAnalysis.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF8422F010E10047C1F6 /* UIApplication+ZYAnalysis.h */; };
@@ -67,6 +66,7 @@
 		FE01D03522F012410047C1F6 /* ZYVisualSelectorView.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01D02D22F012410047C1F6 /* ZYVisualSelectorView.h */; };
 		FE01D03622F012410047C1F6 /* ZYVisualSelectorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = FE01D02E22F012410047C1F6 /* ZYVisualSelectorWindow.m */; };
 		FE01D03722F012410047C1F6 /* ZYNodeSelectorView.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01D02F22F012410047C1F6 /* ZYNodeSelectorView.h */; };
+		FEFCDE0722FD7E330014A10E /* SCIO.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF6022F00D850047C1F6 /* SCIO.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -293,6 +293,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEFCDE0722FD7E330014A10E /* SCIO.h in Headers */,
+				FE01CFB222F010E20047C1F6 /* ZYGlobalInfoHelper.h in Headers */,
 				FE01CFC122F010E20047C1F6 /* NSObject+ZYKvcCrash.h in Headers */,
 				FE01CFC522F010E20047C1F6 /* DataContainer.h in Headers */,
 				FE01CFD922F010E20047C1F6 /* Reachability.h in Headers */,
@@ -309,8 +311,6 @@
 				FE01CFAC22F010E20047C1F6 /* ZYDefine.h in Headers */,
 				FE01CFC722F010E20047C1F6 /* NSObject+ZYHelper.h in Headers */,
 				FE01CFD722F010E20047C1F6 /* DataCacheManager.h in Headers */,
-				FE01CF6222F00D850047C1F6 /* SCIO.h in Headers */,
-				FE01CFB222F010E20047C1F6 /* ZYGlobalInfoHelper.h in Headers */,
 				FE01CFB422F010E20047C1F6 /* UICollectionView+ZYAnalysis.h in Headers */,
 				FE01CFBE22F010E20047C1F6 /* ParameterConfig.h in Headers */,
 				FE01CFC622F010E20047C1F6 /* MethodSwizzingTool.h in Headers */,

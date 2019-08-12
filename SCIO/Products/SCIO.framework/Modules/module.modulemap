@@ -1,0 +1,6 @@
+framework module SCIO {
+  umbrella header "SCIO.h"
+
+  export *
+  module * { export * }
+}

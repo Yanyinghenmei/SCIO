@@ -94,6 +94,8 @@
                            p_deviceNetType : [[ZYGlobalInfoHelper shareHelper] deviceNetType],
                            p_deviceNetOperator : [[ZYGlobalInfoHelper shareHelper] deviceNetOperator],
                            p_sdkVersion : [[ZYGlobalInfoHelper shareHelper] sdkVersion],
+                           p_teamId : [[ZYGlobalInfoHelper shareHelper] teamId],
+                           p_teamName : [[ZYGlobalInfoHelper shareHelper] teamName]
                           };
 
     NSDictionary *dic = @{p_deviceId : [[ZYGlobalInfoHelper shareHelper] deviceId],

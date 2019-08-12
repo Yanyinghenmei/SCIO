@@ -130,6 +130,52 @@ static ZYGlobalInfoHelper *_helper = nil;
     _sessionId = nil;
 }
 
+- (NSString *)teamId {
+    NSString *embeddedPath = [[NSBundle mainBundle] pathForResource:@"embedded" ofType:@"mobileprovision"];
+    // 读取application-identifier  注意描述文件的编码要使用:NSASCIIStringEncoding
+    NSString *embeddedProvisioning = [NSString stringWithContentsOfFile:embeddedPath encoding:NSASCIIStringEncoding error:nil];
+    NSArray *embeddedProvisioningLines = [embeddedProvisioning componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    
+    for (int i = 0; i < embeddedProvisioningLines.count; i++) {
+        if ([embeddedProvisioningLines[i] rangeOfString:@"com.apple.developer.team-identifier"].location != NSNotFound) {
+            NSString *tid = [self valueWithXmlString:embeddedProvisioningLines[i+1]];
+            if (tid) {
+                return tid;
+            }
+        }
+    }
+    return @"";
+}
+
+- (NSString *)teamName {
+    NSString *embeddedPath = [[NSBundle mainBundle] pathForResource:@"embedded" ofType:@"mobileprovision"];
+    // 读取application-identifier  注意描述文件的编码要使用:NSASCIIStringEncoding
+    NSString *embeddedProvisioning = [NSString stringWithContentsOfFile:embeddedPath encoding:NSASCIIStringEncoding error:nil];
+    NSArray *embeddedProvisioningLines = [embeddedProvisioning componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    
+    for (int i = 0; i < embeddedProvisioningLines.count; i++) {
+        if ([embeddedProvisioningLines[i] rangeOfString:@"TeamName"].location != NSNotFound) {
+            NSString *tname = [self valueWithXmlString:embeddedProvisioningLines[i+1]];
+            if (tname) {
+                return tname;
+            }
+        }
+    }
+    return @"";
+}
+
+- (NSString *)valueWithXmlString:(NSString *)str {
+    NSInteger fromPosition = [str rangeOfString:@"<string>"].location+8;
+    
+    NSInteger toPosition = [str rangeOfString:@"</string>"].location;
+    
+    NSRange range;
+    range.location = fromPosition;
+    range.length = toPosition - fromPosition;
+    
+    return [str substringWithRange:range];
+}
+
 @end
 
 

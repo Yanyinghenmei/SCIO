@@ -169,6 +169,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="actionLabel" destination="QZ5-IQ-rLJ" id="iM7-Fl-eep"/>
+                        <outlet property="textView" destination="ziF-DU-1cs" id="h2l-z4-y2E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -32,6 +32,8 @@ static NSString *p_appVersion = @"appv";                // app 版本号
 static NSString *p_appLanguage = @"appl";               // app 语言
 static NSString *p_appName = @"appn";                   // APP 名称
 static NSString *p_appId = @"aid";                      // APP id
+static NSString *p_teamId = @"tid";                     // team id
+static NSString *p_teamName = @"tname";                 // team name
 
 // 设备信息
 static NSString *p_mac = @"mac";                        // mac address

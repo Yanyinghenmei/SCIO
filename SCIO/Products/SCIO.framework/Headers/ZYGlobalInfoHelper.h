@@ -89,9 +89,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  获取开发者账号组织名
  */
-- (NSString *)teamId;
-
-- (NSString *)teamName;
+- (NSArray *)teamId;
 
 @end
 

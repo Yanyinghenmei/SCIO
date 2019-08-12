@@ -7,8 +7,10 @@
 //
 
 #import "ViewController.h"
+#import <SCIO/SCIO.h>
 
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UILabel *actionLabel;
 @property (nonatomic,copy) NSString *string;
 @property (nonatomic,copy) NSDictionary *dictionary;
