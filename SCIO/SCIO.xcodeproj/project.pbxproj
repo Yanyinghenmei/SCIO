@@ -66,6 +66,8 @@
 		FE01D03522F012410047C1F6 /* ZYVisualSelectorView.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01D02D22F012410047C1F6 /* ZYVisualSelectorView.h */; };
 		FE01D03622F012410047C1F6 /* ZYVisualSelectorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = FE01D02E22F012410047C1F6 /* ZYVisualSelectorWindow.m */; };
 		FE01D03722F012410047C1F6 /* ZYNodeSelectorView.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01D02F22F012410047C1F6 /* ZYNodeSelectorView.h */; };
+		FE95D1B4230FCE810036D6CE /* SCIOService.h in Headers */ = {isa = PBXBuildFile; fileRef = FE95D1B2230FCE810036D6CE /* SCIOService.h */; };
+		FE95D1B5230FCE810036D6CE /* SCIOService.m in Sources */ = {isa = PBXBuildFile; fileRef = FE95D1B3230FCE810036D6CE /* SCIOService.m */; };
 		FEFCDE0722FD7E330014A10E /* SCIO.h in Headers */ = {isa = PBXBuildFile; fileRef = FE01CF6022F00D850047C1F6 /* SCIO.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -133,6 +135,8 @@
 		FE01D02D22F012410047C1F6 /* ZYVisualSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYVisualSelectorView.h; sourceTree = "<group>"; };
 		FE01D02E22F012410047C1F6 /* ZYVisualSelectorWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYVisualSelectorWindow.m; sourceTree = "<group>"; };
 		FE01D02F22F012410047C1F6 /* ZYNodeSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYNodeSelectorView.h; sourceTree = "<group>"; };
+		FE95D1B2230FCE810036D6CE /* SCIOService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCIOService.h; sourceTree = "<group>"; };
+		FE95D1B3230FCE810036D6CE /* SCIOService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCIOService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +271,8 @@
 				FE01CFA622F010E20047C1F6 /* Reachability.m */,
 				FE01CFA722F010E20047C1F6 /* StatisticalRequest.h */,
 				FE01CFA922F010E20047C1F6 /* StatisticalRequest.m */,
+				FE95D1B2230FCE810036D6CE /* SCIOService.h */,
+				FE95D1B3230FCE810036D6CE /* SCIOService.m */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -306,6 +312,7 @@
 				FE01CFB622F010E20047C1F6 /* UIApplication+ZYAnalysis.h in Headers */,
 				FE01CFB922F010E20047C1F6 /* UIGestureRecognizer+ZYAnalysis.h in Headers */,
 				FE01CFC922F010E20047C1F6 /* UIView+ZYNode.h in Headers */,
+				FE95D1B4230FCE810036D6CE /* SCIOService.h in Headers */,
 				FE01CFB722F010E20047C1F6 /* UIViewController+ZYAnalysis.h in Headers */,
 				FE01D03022F012410047C1F6 /* ZYVisualSelectorWindow.h in Headers */,
 				FE01CFAC22F010E20047C1F6 /* ZYDefine.h in Headers */,
@@ -370,6 +377,7 @@
 				TargetAttributes = {
 					FE01CF5C22F00D850047C1F6 = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1020;
 					};
 					FE01CF6B22F00E1F0047C1F6 = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -464,6 +472,7 @@
 			files = (
 				FE01CFD822F010E20047C1F6 /* StatisticalRequest.m in Sources */,
 				FE01D03322F012410047C1F6 /* ZYNodeSelectorView.m in Sources */,
+				FE95D1B5230FCE810036D6CE /* SCIOService.m in Sources */,
 				FE01CFC222F010E20047C1F6 /* NSObject+ZYHelper.m in Sources */,
 				FE01CFAD22F010E20047C1F6 /* UIApplication+ZYAnalysis.m in Sources */,
 				FE01D03622F012410047C1F6 /* ZYVisualSelectorWindow.m in Sources */,
@@ -625,6 +634,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A22D6F46E8C67384B631D028 /* Pods-SCIO.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -645,6 +655,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = scfl.SCIO;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -653,6 +665,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 43EC82A1225949DDD9C38775 /* Pods-SCIO.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -673,6 +686,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = scfl.SCIO;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -12,6 +12,7 @@
 #import "NSObject+ZYHelper.h"
 #import "ZYHeader.h"
 #import "StatisticalRequest.h"
+#import "SCIOService.h"
 
 
 static ZYVisualSelectorWindow *visualSelectorWindow;
@@ -80,6 +81,15 @@ static ZYVisualSelectorWindow *visualSelectorWindow;
 - (void)zy_temp_application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     [self zy_temp_application:application didFinishLaunchingWithOptions:launchOptions];
+    
+    
+//    [[SCIOService shareManager] saveForEvent:@"00001"
+//                                        info:@{@"orderId":@"xxxx",@"price":@"10000"}]
+    
+    
+//    [[SCIOService shareManager] saveUserLocalWithLatitude:39.961852
+//                                                longitude:116.403912];
+    
     
     // 可视化埋点 window
     visualSelectorWindow = [[ZYVisualSelectorWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
