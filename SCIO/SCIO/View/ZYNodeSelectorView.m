@@ -39,7 +39,7 @@
     }
     
     // 设为选中状态
-    UIWindow *rootWindow = [UIApplication sharedApplication].keyWindow;
+    UIWindow *rootWindow = [UIApplication sharedApplication].windows[0];
     UIView *responderView = [rootWindow hitTest:[touches.anyObject locationInView:rootWindow] withEvent:nil];
     
     // viewController.view 不在这里选择
