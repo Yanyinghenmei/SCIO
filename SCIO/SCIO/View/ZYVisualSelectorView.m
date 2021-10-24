@@ -28,7 +28,7 @@
         return [super hitTest:point withEvent:event];
     }
     
-    UIWindow *rootWindow = [UIApplication sharedApplication].keyWindow;
+    UIWindow *rootWindow = [UIApplication sharedApplication].windows[0];
     UIView *responderView = [rootWindow hitTest:point withEvent:event];
     
     if (responderView) {
